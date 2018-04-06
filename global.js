@@ -4,9 +4,13 @@ var settings = {
 };
 
 var api = {
-    "reddit_base_url" : "https://www.reddit.com",
-    "reddit_oauth_base_url" : "https://oauth.reddit.com",
-    "reddit_access_token" : "/api/v1/access_token"
+    reddit: {
+        "base_url": "https://www.reddit.com",
+        "access_token": "/api/v1/access_token",
+
+        "oauth_base_url": "https://oauth.reddit.com",
+        "me" : "/api/v1/me"
+    }
 };
 
 module.exports = {

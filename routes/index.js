@@ -10,8 +10,8 @@ router.post('/access_token', function (req, res, next) {
 
     axios.request({
         method: "POST",
-        baseURL: global.api.reddit_base_url,
-        url: global.api.reddit_access_token,
+        baseURL: global.api.reddit.base_url,
+        url: global.api.reddit.access_token,
 
         headers: {
             "User-Agent": "LlamaApp/0.1 by JackkAllenn",
@@ -28,7 +28,8 @@ router.post('/access_token', function (req, res, next) {
             access_token : response.data.access_token
         });
     }).catch(function (error) {
-        res.send({error: "something bad happened"});
+        console.log(error);
+        res.send({ error: "Unable to verify details"});
     })
 });
 
