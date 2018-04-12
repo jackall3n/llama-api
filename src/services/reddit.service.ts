@@ -54,7 +54,7 @@ export default class RedditService {
         let base_64_token = Buffer.from(`${this.reddit_client.id}:${this.reddit_client.secret}`, 'ascii').toString("base64");
 
         let options: RequestOptions<string> = {
-
+            dataPath: "access_token",
             configuration: {
                 baseURL: this.reddit_endpoints.base_url,
                 url: this.reddit_endpoints.access_token,

@@ -8,6 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const llama_1 = require("../llama");
 class RedditEndpoints {
+    constructor() {
+        this.base_url = "https://www.reddit.com";
+        this.oauth_base_url = "https://oauth.reddit.com";
+        this.access_token = "/api/v1/access_token";
+        this.me = "/api/v1/me";
+    }
 }
 exports.RedditEndpoints = RedditEndpoints;
 let ConfigService = class ConfigService {
