@@ -17,7 +17,7 @@ let RedditService = class RedditService {
     constructor(_api, _configService) {
         this._api = _api;
         this._configService = _configService;
-        this.reddit_api = this._configService.getRedditApi();
+        this.reddit_endpoints = new config_service_1.RedditEndpoints();
         this.reddit_client = this._configService.getRedditClient();
     }
     getSubreddit(subreddit_name, access_token, time_period = "month", limit = 25) {
@@ -28,7 +28,7 @@ let RedditService = class RedditService {
                 headers: {
                     "Authorization": `Bearer ${access_token}`
                 },
-                baseURL: this.reddit_api["oauth_base_url"],
+                baseURL: this.reddit_endpoints.oauth_base_url,
                 url: `r/${subreddit_name}/top/.json`,
                 params: {
                     "limit": limit,
@@ -44,7 +44,7 @@ let RedditService = class RedditService {
             mapper: subreddit_mapper_1.SubredditInformationMapper,
             dataPath: 'data',
             configuration: {
-                baseURL: this.reddit_api["base_url"],
+                baseURL: this.reddit_endpoints.base_url,
                 url: `r/${subreddit_name}/about/.json`
             }
         };
@@ -54,8 +54,8 @@ let RedditService = class RedditService {
         let base_64_token = Buffer.from(`${this.reddit_client.id}:${this.reddit_client.secret}`, 'ascii').toString("base64");
         let options = {
             configuration: {
-                baseURL: this.reddit_api["base_url"],
-                url: this.reddit_api["access_token"],
+                baseURL: this.reddit_endpoints.base_url,
+                url: this.reddit_endpoints.access_token,
                 headers: {
                     "Authorization": `Basic ${base_64_token}`
                 },

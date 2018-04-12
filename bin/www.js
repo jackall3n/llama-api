@@ -3,7 +3,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("./server");
 const debug = require("debug");
+const env = require("dotenv");
 const http_1 = require("http");
+env.load();
 let port = normalizePort(process.env.PORT || 3000);
 let app = server_1.default.bootstrap().app;
 app.set('port', port);

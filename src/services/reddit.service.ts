@@ -4,15 +4,14 @@ import {SubredditInformationMapper, SubredditMapper} from "../mappers/subreddit.
 import {Subreddit} from "../models/subreddit";
 import {SubredditInformation} from "../models/subreddit-information";
 import {Service} from "../llama";
-import ConfigService from "./config.service";
+import ConfigService, {RedditEndpoints} from "./config.service";
 
 @Service()
 export default class RedditService {
-    reddit_api: { [key: string]: string };
+    reddit_endpoints : RedditEndpoints = new RedditEndpoints();
     reddit_client: { id: string; secret: string; };
 
     constructor(private _api: ApiService, private _configService: ConfigService) {
-        this.reddit_api = this._configService.getRedditApi()
         this.reddit_client = this._configService.getRedditClient()
     }
 
@@ -25,7 +24,7 @@ export default class RedditService {
                 headers: {
                     "Authorization": `Bearer ${access_token}`
                 },
-                baseURL: this.reddit_api["oauth_base_url"],
+                baseURL: this.reddit_endpoints.oauth_base_url,
                 url: `r/${subreddit_name}/top/.json`,
                 params: {
                     "limit": limit,
@@ -43,7 +42,7 @@ export default class RedditService {
             mapper: SubredditInformationMapper,
             dataPath: 'data',
             configuration: {
-                baseURL: this.reddit_api["base_url"],
+                baseURL: this.reddit_endpoints.base_url,
                 url: `r/${subreddit_name}/about/.json`
             }
         };
@@ -52,13 +51,13 @@ export default class RedditService {
     }
 
     getAccessToken(username: string, password: string): AxiosPromise {
-        let base_64_token = Buffer.from(`${this.reddit_client.id}:${this.reddit_client.secret}`, 'ascii').toString("base64")
+        let base_64_token = Buffer.from(`${this.reddit_client.id}:${this.reddit_client.secret}`, 'ascii').toString("base64");
 
         let options: RequestOptions<string> = {
 
             configuration: {
-                baseURL: this.reddit_api["base_url"],
-                url: this.reddit_api["access_token"],
+                baseURL: this.reddit_endpoints.base_url,
+                url: this.reddit_endpoints.access_token,
                 headers: {
                     "Authorization": `Basic ${base_64_token}`
                 },

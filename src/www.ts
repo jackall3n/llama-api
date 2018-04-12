@@ -2,7 +2,10 @@
 
 import appServer from "./server";
 import * as debug from "debug";
+import * as env from "dotenv";
 import {createServer} from "http";
+
+env.load();
 
 let port = normalizePort(process.env.PORT || 3000);
 let app = appServer.bootstrap().app;
